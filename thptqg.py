@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 
 st_autorefresh(interval=100)
-st.header("Bạn còn:", divider='rainbow')
+st.header("Bạn còn bao nhiêu thời gian:", divider='rainbow')
 
 from datetime import datetime
 now=datetime.now()
@@ -18,5 +18,6 @@ years=days/365.25
 st.write(f"Năm: {years:,.2f}")
 st.write(f"Tháng: {months:,.1f}")
 st.write(f"Ngày: {days:,.2f}")
-st.write(f"Giờ - phút - giây: {hours:,.0f} : {minutes:,.0f} : {total_seconds:,.1f}")
+st.write(f"Giờ - phút - giây: {hours:,.0f} - {minutes:,.0f} - {total_seconds:,.1f}")
+
 
