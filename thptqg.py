@@ -4,8 +4,9 @@ from streamlit_autorefresh import st_autorefresh
 st_autorefresh(interval=100)
 st.header("Bạn còn bao nhiêu thời gian:", divider='rainbow')
 
-from datetime import datetime
-now=datetime.now()
+from datetime import datetime, timedelta
+
+now=datetime.now() + timedelta(hours=7)
 target=datetime(2028, 6, 26, 7, 30, 0)
 delta=target-now
 total_seconds=delta.total_seconds()
@@ -19,5 +20,18 @@ st.write(f"Năm: {years:,.2f}")
 st.write(f"Tháng: {months:,.1f}")
 st.write(f"Ngày: {days:,.2f}")
 st.write(f"Giờ - phút - giây: {hours:,.0f} - {minutes:,.0f} - {total_seconds:,.1f}")
+
+todayTarget = now.replace(hour=0,minute=0,second=0, microsecond=0) + timedelta(days=1)
+st.write(f"Hiện tại là: {now.hour} : {now.minute}")
+st.write(f"Bạn còn {(todayTarget - now).hour} tiếng")
+
+dayStart = now.replace(hour=0,minute=0,second=0, microsecond=0)
+timePassed = now - dayStart
+
+dayPercentage = int(timePassed/ 86400 * 100)
+
+st.progress(dayPercentage, "Time left today:")
+
+
 
 
