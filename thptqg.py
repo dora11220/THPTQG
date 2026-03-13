@@ -10,7 +10,7 @@ st.header("Tiến độ mục tiêu 2028:", divider='rainbow')
 # Thiết lập thời gian (Dùng utcnow + 7 để khớp giờ VN trên server)
 now = datetime.utcnow() + timedelta(hours=7)
 target = datetime(2028, 6, 26, 7, 30, 0) # Không cần +7 ở đây nếu đây là giờ đích thực tế
-start_journey = datetime(2024, 1, 1)    # Giả sử hành trình bắt đầu từ đầu năm 2024
+start_journey = datetime(2025, 8, 1)    # Giả sử hành trình bắt đầu từ đầu năm 2024
 
 # Tính toán delta
 delta = target - now
@@ -41,3 +41,4 @@ elapsed_journey = (now - start_journey).total_seconds()
 journey_percentage = min(max(elapsed_journey / total_journey_duration, 0.0), 1.0) # Giới hạn từ 0-1
 
 st.progress(journey_percentage, text=f"Tiến độ đến kỳ thi: {journey_percentage*100:.2f}%")
+
