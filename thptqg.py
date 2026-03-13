@@ -32,8 +32,9 @@ dayPercentage = int(timePassed.total_seconds()/ 86400 * 100)
 
 st.progress(dayPercentage, "Ngày:")
 
-journeyPercentage = int(now/target * 100)
+journeyPercentage = int(now.total_seconds()/target.total_seconds * 100)
 st.progress(hourneyPercentage, "Thi: ")
+
 
 
 
