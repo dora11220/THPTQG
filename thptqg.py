@@ -1,43 +1,43 @@
 import streamlit as st
 from streamlit_autorefresh import st_autorefresh
-
-st_autorefresh(interval=100)
-st.header("Bạn còn bao nhiêu thời gian:", divider='rainbow')
-
 from datetime import datetime, timedelta
 
-now=datetime.now() + timedelta(hours=7)
-target=datetime(2028, 6, 26, 7, 30, 0) + timedelta(hours=7)
-delta=target-now
-total_seconds=delta.total_seconds()
-minutes=total_seconds/60
-hours=total_seconds/3600
-days=total_seconds/86400
-months = days/30.436875
-years=days/365.25
+# Tự động làm mới giao diện
+st_autorefresh(interval=100, key="countdown_timer")
 
-st.write(f"Năm: {years:,.2f}")
-st.write(f"Tháng: {months:,.1f}")
-st.write(f"Ngày: {days:,.2f}")
-st.write(f"Giờ - phút - giây: {hours:,.0f} - {minutes:,.0f} - {total_seconds:,.1f}")
+st.header("Tiến độ mục tiêu 2028:", divider='rainbow')
 
-todayTarget = now.replace(hour=0,minute=0,second=0, microsecond=0) + timedelta(days=1)
-st.write(f"Hiện tại là: {now.hour} : {now.minute}")
-st.write(f"Bạn còn {int((todayTarget - now).total_seconds()/3600)} tiếng")
+# Thiết lập thời gian (Dùng utcnow + 7 để khớp giờ VN trên server)
+now = datetime.utcnow() + timedelta(hours=7)
+target = datetime(2028, 6, 26, 7, 30, 0) # Không cần +7 ở đây nếu đây là giờ đích thực tế
+start_journey = datetime(2024, 1, 1)    # Giả sử hành trình bắt đầu từ đầu năm 2024
 
-dayStart = now.replace(hour=0,minute=0,second=0, microsecond=0)
-timePassed = now - dayStart
+# Tính toán delta
+delta = target - now
+total_seconds = delta.total_seconds()
 
-dayPercentage = int(timePassed.total_seconds()/ 86400 * 100)
+# Hiển thị các chỉ số đếm ngược
+days = total_seconds / 86400
+st.columns(3)[0].metric("Ngày còn lại", f"{days:,.0f}")
+st.columns(3)[1].metric("Tháng còn lại", f"{days/30.43:,.1f}")
+st.columns(3)[2].metric("Năm còn lại", f"{days/365.25:,.2f}")
 
-st.progress(dayPercentage, "Ngày:")
+st.write(f"⏱️ **Đếm ngược chi tiết:** {total_seconds/3600:,.0f} giờ hoặc {total_seconds:,.0f} giây")
 
-journeyPercentage = int(now.total_seconds()/target.total_seconds * 100)
-st.progress(hourneyPercentage, "Thi: ")
+st.divider()
 
+# 1. TIẾN ĐỘ TRONG NGÀY (Day Progress)
+day_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+time_passed_today = (now - day_start).total_seconds()
+day_percentage = time_passed_today / 86400
 
+st.write(f"🕒 Bây giờ là: **{now.strftime('%H:%M:%S')}**")
+st.progress(day_percentage, text=f"Hôm nay đã trôi qua: {day_percentage*100:.1f}%")
 
+# 2. TIẾN ĐỘ ĐẾN KỲ THI (Journey Progress)
+# Công thức: (Đã đi được / Tổng thời gian hành trình)
+total_journey_duration = (target - start_journey).total_seconds()
+elapsed_journey = (now - start_journey).total_seconds()
+journey_percentage = min(max(elapsed_journey / total_journey_duration, 0.0), 1.0) # Giới hạn từ 0-1
 
-
-
-
+st.progress(journey_percentage, text=f"Tiến độ đến kỳ thi: {journey_percentage*100:.2f}%")
