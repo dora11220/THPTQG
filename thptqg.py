@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 # Tự động làm mới giao diện
 st_autorefresh(interval=100, key="countdown_timer")
 
-st.header("Tiến độ mục tiêu 2028:", divider='rainbow')
+st.header("Tiến độ TN THPT 2028:", divider='rainbow')
 
 # Thiết lập thời gian (Dùng utcnow + 7 để khớp giờ VN trên server)
 now = datetime.utcnow() + timedelta(hours=7)
@@ -41,4 +41,5 @@ elapsed_journey = (now - start_journey).total_seconds()
 journey_percentage = min(max(elapsed_journey / total_journey_duration, 0.0), 1.0) # Giới hạn từ 0-1
 
 st.progress(journey_percentage, text=f"Tiến độ đến kỳ thi: {journey_percentage*100:.2f}%")
+
 
