@@ -28,9 +28,10 @@ st.write(f"Bạn còn {int((todayTarget - now).total_seconds()/3600)} tiếng")
 dayStart = now.replace(hour=0,minute=0,second=0, microsecond=0)
 timePassed = now - dayStart
 
-dayPercentage = int(timePassed/ 86400 * 100)
+dayPercentage = int(timePassed.total_seconds()/ 86400 * 100)
 
 st.progress(dayPercentage, "Time left today:")
+
 
 
 
