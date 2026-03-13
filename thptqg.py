@@ -7,7 +7,7 @@ st.header("Bạn còn bao nhiêu thời gian:", divider='rainbow')
 from datetime import datetime, timedelta
 
 now=datetime.now() + timedelta(hours=7)
-target=datetime(2028, 6, 26, 7, 30, 0)
+target=datetime(2028, 6, 26, 7, 30, 0) + timedelta(hours=7)
 delta=target-now
 total_seconds=delta.total_seconds()
 minutes=total_seconds/60
@@ -30,7 +30,10 @@ timePassed = now - dayStart
 
 dayPercentage = int(timePassed.total_seconds()/ 86400 * 100)
 
-st.progress(dayPercentage, "Time left today:")
+st.progress(dayPercentage, "Ngày:")
+
+journeyPercentage = int(now/target * 100)
+st.progress(hourneyPercentage, "Thi: ")
 
 
 
